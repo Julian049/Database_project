@@ -82,6 +82,29 @@ public class Main {
 
     public void addTracks() {
         tracks = new ArrayList<>();
+        Set<String> trackYaAgregado = new HashSet<>();
+
+        for (Dta song : songs) {
+            String id_track = song.getTrack_id().trim();
+            String id_artist = "";
+            String id_album = "";
+            for (Artist artist : artists) {
+                if (song.getTrack_artist().trim().equals(artist.getArtist_name())) {
+                    id_artist = artist.getArtist_id();
+                }
+            }
+            for (Album album : albums) {
+                if (song.getTrack_album_id().trim().equals(album.getAlbum_id())) {
+                    id_album = album.getAlbum_id();
+                }
+            }
+            if (!trackYaAgregado.contains(id_track)) {
+                Track newTrack = new Track(id_track, song.getTrack_name(), song.getTrack_popularity(), song.getDuration_ms(), song.getDanceability(), song.getEnergy(), song.getKey(), song.getLoudness(),
+                        song.getMode(), song.getSpeechiness(), song.getAcousticness(), song.getInstrumentalness(), song.getLiveness(), song.getValence(), song.getTempo(), id_artist, id_album);
+                tracks.add(newTrack);
+                trackYaAgregado.add(id_track);
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -90,6 +113,7 @@ public class Main {
         main.addArtists();
         main.addAlbums();
         main.addPlaylists();
+        main.addTracks();
 
 //        ArrayList<Artist> artists = main.artists();
 //        for (Artist artist : artists) {
@@ -101,9 +125,14 @@ public class Main {
 //            System.out.println(album.toString());
 //        }
 
-        ArrayList<Playlist> playlists = main.playlists;
-        for (Playlist playlist : playlists) {
-            System.out.println(playlist.toString());
+//        ArrayList<Playlist> playlists = main.playlists;
+//        for (Playlist playlist : playlists) {
+//            System.out.println(playlist.toString());
+//        }
+
+        ArrayList<Track> tracks = main.tracks;
+        for (Track track : tracks) {
+            System.out.println(track.toString());
         }
     }
 

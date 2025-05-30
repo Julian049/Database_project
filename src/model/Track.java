@@ -5,22 +5,22 @@ public class Track {
     private String track_id;
     private String track_name;
     private String track_popularity;
-    private int duration_ms;
-    private double danceability;
-    private double energy;
-    private double track_key;
-    private double loudness;
-    private boolean track_mode;
-    private double speechiness;
-    private double acousticness;
-    private double instrumentalness;
-    private double liveness;
-    private double valence;
-    private double tempo;
+    private String duration_ms;
+    private String danceability;
+    private String energy;
+    private String track_key;
+    private String loudness;
+    private String track_mode;
+    private String speechiness;
+    private String acousticness;
+    private String instrumentalness;
+    private String liveness;
+    private String valence;
+    private String tempo;
     private String artist_id;
     private String album_id;
 
-    public Track(String track_id, String track_name, String track_popularity, int duration_ms, double danceability, double energy, double track_key, double loudness, boolean track_mode, double speechiness, double acousticness, double instrumentalness, double liveness, double valence, double tempo, String artist_id, String album_id) {
+    public Track(String track_id, String track_name, String track_popularity, String duration_ms, String danceability, String energy, String track_key, String loudness, String track_mode, String speechiness, String acousticness, String instrumentalness, String liveness, String valence, String tempo, String artist_id, String album_id) {
         this.track_id = track_id;
         this.track_name = track_name;
         this.track_popularity = track_popularity;
@@ -64,99 +64,99 @@ public class Track {
         this.track_popularity = track_popularity;
     }
 
-    public int getDuration_ms() {
+    public String getDuration_ms() {
         return duration_ms;
     }
 
-    public void setDuration_ms(int duration_ms) {
+    public void setDuration_ms(String duration_ms) {
         this.duration_ms = duration_ms;
     }
 
-    public double getDanceability() {
+    public String getDanceability() {
         return danceability;
     }
 
-    public void setDanceability(double danceability) {
+    public void setDanceability(String danceability) {
         this.danceability = danceability;
     }
 
-    public double getEnergy() {
+    public String getEnergy() {
         return energy;
     }
 
-    public void setEnergy(double energy) {
+    public void setEnergy(String energy) {
         this.energy = energy;
     }
 
-    public double getTrack_key() {
+    public String getTrack_key() {
         return track_key;
     }
 
-    public void setTrack_key(double track_key) {
+    public void setTrack_key(String track_key) {
         this.track_key = track_key;
     }
 
-    public double getLoudness() {
+    public String getLoudness() {
         return loudness;
     }
 
-    public void setLoudness(double loudness) {
+    public void setLoudness(String loudness) {
         this.loudness = loudness;
     }
 
-    public boolean isTrack_mode() {
+    public String getTrack_mode() {
         return track_mode;
     }
 
-    public void setTrack_mode(boolean track_mode) {
+    public void setTrack_mode(String track_mode) {
         this.track_mode = track_mode;
     }
 
-    public double getSpeechiness() {
+    public String getSpeechiness() {
         return speechiness;
     }
 
-    public void setSpeechiness(double speechiness) {
+    public void setSpeechiness(String speechiness) {
         this.speechiness = speechiness;
     }
 
-    public double getAcousticness() {
+    public String getAcousticness() {
         return acousticness;
     }
 
-    public void setAcousticness(double acousticness) {
+    public void setAcousticness(String acousticness) {
         this.acousticness = acousticness;
     }
 
-    public double getInstrumentalness() {
+    public String getInstrumentalness() {
         return instrumentalness;
     }
 
-    public void setInstrumentalness(double instrumentalness) {
+    public void setInstrumentalness(String instrumentalness) {
         this.instrumentalness = instrumentalness;
     }
 
-    public double getLiveness() {
+    public String getLiveness() {
         return liveness;
     }
 
-    public void setLiveness(double liveness) {
+    public void setLiveness(String liveness) {
         this.liveness = liveness;
     }
 
-    public double getValence() {
+    public String getValence() {
         return valence;
     }
 
-    public void setValence(double valence) {
+    public void setValence(String valence) {
         this.valence = valence;
     }
 
-    public double getTempo() {
+    public String getTempo() {
         return tempo;
     }
 
-    public void setTempo(double tempo) {
+    public void setTempo(String tempo) {
         this.tempo = tempo;
     }
 
@@ -174,5 +174,28 @@ public class Track {
 
     public void setAlbum_id(String album_id) {
         this.album_id = album_id;
+    }
+
+    @Override
+    public String toString() {
+        return "Track{" +
+                "track_id='" + track_id + '\'' +
+                ", track_name='" + track_name + '\'' +
+                ", track_popularity='" + track_popularity + '\'' +
+                ", duration_ms='" + duration_ms + '\'' +
+                ", danceability='" + danceability + '\'' +
+                ", energy='" + energy + '\'' +
+                ", track_key='" + track_key + '\'' +
+                ", loudness='" + loudness + '\'' +
+                ", track_mode='" + track_mode + '\'' +
+                ", speechiness='" + speechiness + '\'' +
+                ", acousticness='" + acousticness + '\'' +
+                ", instrumentalness='" + instrumentalness + '\'' +
+                ", liveness='" + liveness + '\'' +
+                ", valence='" + valence + '\'' +
+                ", tempo='" + tempo + '\'' +
+                ", artist_id='" + artist_id + '\'' +
+                ", album_id='" + album_id + '\'' +
+                '}';
     }
 }
