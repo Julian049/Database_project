@@ -42,14 +42,14 @@ public class TestFile {
     }
 
     public void readCSV() {
-        try (FileReader fr = new FileReader("src/resources/spotify_songs1.csv")) {
+        try (FileReader fr = new FileReader("src/resources/spotify_songs.csv")) {
             CsvToBean<TrackV2> csvToBean = new CsvToBeanBuilder<TrackV2>(fr).withType(TrackV2.class).build();
 
             list = csvToBean.parse();
 
-            for (TrackV2 bean : list) {
-                System.out.println(bean.toString());
-            }
+//            for (TrackV2 bean : list) {
+//                System.out.println(bean.toString());
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -97,12 +97,28 @@ public class TestFile {
                 }
 
                 String trackName = replaceQuotation(track.getTrackName());
+                String artistName = replaceQuotation(track.getTrackArtist());
                 String albumName = replaceQuotation(track.getTrackAlbumName());
+                String playlistName = replaceQuotation(track.getPlaylistName());
+                String date = track.getTrackAlbumReleaseDate();
+                double loudness = track.getLoudness();
+
+                if (loudness>0){
+                    loudness = -loudness;
+                }
+
+                if (date.length() < 10) {
+                    if (date.length() == 7) {
+                        date = date + "-01";
+                    } else if (date.length() == 4) {
+                        date = date + "-01-01";
+                    }
+                }
 
                 fileWriter.write("INSERT INTO ARTISTS (artist_name) " +
-                        "VALUES ('" + track.getTrackArtist() + "') ON CONFLICT (artist_name) DO NOTHING;\n");
+                        "VALUES ('" + artistName + "') ON CONFLICT (artist_name) DO NOTHING;\n");
                 fileWriter.write("INSERT INTO ALBUMS (album_id, album_name, release_date) " +
-                        "VALUES ('" + track.getTrackAlbumId() + "', '" + albumName + "' , DATE '" + track.getTrackAlbumReleaseDate() + "') ON CONFLICT (album_id) DO NOTHING;\n");
+                        "VALUES ('" + track.getTrackAlbumId() + "', '" + albumName + "' , DATE '" + date + "') ON CONFLICT (album_id) DO NOTHING;\n");
                 fileWriter.write("INSERT INTO TRACKS (\n" +
                         "    track_id, track_name, track_popularity, duration_ms, danceability, energy, \n" +
                         "    track_key, loudness, track_mode, speechiness, acousticness, instrumentalness, \n" +
@@ -110,13 +126,13 @@ public class TestFile {
                         ")\n" +
                         "VALUES (\n" +
                         "    '" + track.getTrackId() + "', '" + trackName + "', " + track.getTrackPopularity() + ", " + track.getDurationMs() + ", " + track.getDanceability() + ", " + track.getEnergy() + ",\n" +
-                        "    " + track.getKey() + ", " + track.getLoudness() + ", " + mode + ", " + track.getSpeechiness() + ", " + track.getAcousticness() + ", " + track.getInstrumentalness() + ",\n" +
-                        "    " + track.getLiveness() + ", " + track.getValence() + ", " + track.getTempo() + ", (SELECT GET_ARTIST_ID('" + track.getTrackArtist() + "')), '" + track.getTrackAlbumId() + "'\n" +
-                        ");\n");
+                        "    " + track.getKey() + ", " + loudness + ", " + mode + ", " + track.getSpeechiness() + ", " + track.getAcousticness() + ", " + track.getInstrumentalness() + ",\n" +
+                        "    " + track.getLiveness() + ", " + track.getValence() + ", " + track.getTempo() + ", (SELECT GET_ARTIST_ID('" + artistName + "')), '" + track.getTrackAlbumId() + "'\n" +
+                        ") ON CONFLICT (track_id) DO NOTHING;\n");
                 fileWriter.write("INSERT INTO PLAYLISTS (playlist_id, playlist_name, genre, subgenre) " +
-                        "VALUES ('" + track.getPlaylistId() + "', '" + track.getPlaylistName() + "', '" + track.getPlaylistGenre() + "', '" + track.getPlaylistSubgenre() + "') ON CONFLICT (playlist_id) DO NOTHING;\n");
+                        "VALUES ('" + track.getPlaylistId() + "', '" + playlistName + "', '" + track.getPlaylistGenre() + "', '" + track.getPlaylistSubgenre() + "') ON CONFLICT (playlist_id) DO NOTHING;\n");
                 fileWriter.write("INSERT INTO PLAYLIST_TRACKS (track_id, playlist_id) " +
-                        "VALUES ('" + track.getTrackId() + "', '" + track.getPlaylistId() + "');\n \n \n");
+                        "VALUES ('" + track.getTrackId() + "', '" + track.getPlaylistId() + "') ON CONFLICT (track_id, playlist_id) DO NOTHING;\n \n \n");
 
             }
             fileWriter.close();
@@ -128,7 +144,7 @@ public class TestFile {
     private String replaceQuotation(String line) {
         String output = line;
         if (line.contains("'")) {
-            output = output.substring(0, output.indexOf("'")) + "'" + output.substring(output.indexOf("'"));
+            output = output.replace("'", "''");
         }
         return output;
     }
