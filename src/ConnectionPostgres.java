@@ -55,5 +55,23 @@ public class ConnectionPostgres {
         }
     }
 
+    public int getArtistId(String artistName) {
+        int id = 0;
+        try {
+            String query = "select artist_id from artists where artist_name = '"+artistName+"'";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
 
+            while (resultSet.next()) {
+                id = resultSet.getInt("artist_id");
+            }
+
+            resultSet.close();
+            statement.close();
+            close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return id;
+    }
 }
