@@ -100,9 +100,9 @@ public class TestFile {
                 String albumName = replaceQuotation(track.getTrackAlbumName());
 
                 fileWriter.write("INSERT INTO ARTISTS (artist_name) " +
-                        "VALUES ('" + track.getTrackArtist() + "');\n");
+                        "VALUES ('" + track.getTrackArtist() + "') ON CONFLICT (artist_name) DO NOTHING;\n");
                 fileWriter.write("INSERT INTO ALBUMS (album_id, album_name, release_date) " +
-                        "VALUES ('" + track.getTrackAlbumId() + "', '" + albumName + "' , DATE '" + track.getTrackAlbumReleaseDate() + "');\n");
+                        "VALUES ('" + track.getTrackAlbumId() + "', '" + albumName + "' , DATE '" + track.getTrackAlbumReleaseDate() + "') ON CONFLICT (album_id) DO NOTHING;\n");
                 fileWriter.write("INSERT INTO TRACKS (\n" +
                         "    track_id, track_name, track_popularity, duration_ms, danceability, energy, \n" +
                         "    track_key, loudness, track_mode, speechiness, acousticness, instrumentalness, \n" +
@@ -111,10 +111,10 @@ public class TestFile {
                         "VALUES (\n" +
                         "    '" + track.getTrackId() + "', '" + trackName + "', " + track.getTrackPopularity() + ", " + track.getDurationMs() + ", " + track.getDanceability() + ", " + track.getEnergy() + ",\n" +
                         "    " + track.getKey() + ", " + track.getLoudness() + ", " + mode + ", " + track.getSpeechiness() + ", " + track.getAcousticness() + ", " + track.getInstrumentalness() + ",\n" +
-                        "    " + track.getLiveness() + ", " + track.getValence() + ", " + track.getTempo() + ", '" + track.getTrackArtist() + "', '" + track.getTrackAlbumId() + "'\n" +
+                        "    " + track.getLiveness() + ", " + track.getValence() + ", " + track.getTempo() + ", (SELECT GET_ARTIST_ID('" + track.getTrackArtist() + "')), '" + track.getTrackAlbumId() + "'\n" +
                         ");\n");
                 fileWriter.write("INSERT INTO PLAYLISTS (playlist_id, playlist_name, genre, subgenre) " +
-                        "VALUES ('" + track.getPlaylistId() + "', '" + track.getPlaylistName() + "', '" + track.getPlaylistGenre() + "', '" + track.getPlaylistSubgenre() + "');\n");
+                        "VALUES ('" + track.getPlaylistId() + "', '" + track.getPlaylistName() + "', '" + track.getPlaylistGenre() + "', '" + track.getPlaylistSubgenre() + "') ON CONFLICT (playlist_id) DO NOTHING;\n");
                 fileWriter.write("INSERT INTO PLAYLIST_TRACKS (track_id, playlist_id) " +
                         "VALUES ('" + track.getTrackId() + "', '" + track.getPlaylistId() + "');\n \n \n");
 
