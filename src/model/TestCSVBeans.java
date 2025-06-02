@@ -3,11 +3,6 @@ package model;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvToBean;
 
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
-
 public class TestCSVBeans extends CsvToBean {
     @CsvBindByName
     private String track_name;
