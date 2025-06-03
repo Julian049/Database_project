@@ -1,19 +1,19 @@
 CREATE TABLE ALBUMS(
 album_id		VARCHAR(40)						,
-album_name		VARCHAR(60)		NOT NULL		,
+album_name		VARCHAR(200)		NOT NULL		,
 release_date	DATE			NOT NULL		,
 CONSTRAINT "ALB_PK_ALBUM_ID" PRIMARY KEY(album_id)
 );
 
 CREATE TABLE ARTISTS(
 artist_id		SERIAL      					,
-artist_name		VARCHAR(30)		NOT NULL		,
+artist_name		VARCHAR(80)		NOT NULL		,
 CONSTRAINT "ART_PK_ARTIST_ID" PRIMARY KEY(artist_id)
 );
 
 CREATE TABLE TRACKS(
 track_id			VARCHAR(30)					,
-track_name			VARCHAR(60)		NOT NULL	,
+track_name			VARCHAR(150)		NOT NULL	,
 track_popularity	SMALLINT					,
 duration_ms			INTEGER						,
 danceability		DOUBLE PRECISION			,
@@ -34,7 +34,7 @@ CONSTRAINT "TRA_PK_TRACK_ID" PRIMARY KEY(track_id)
 
 CREATE TABLE PLAYLISTS(
 playlist_id			VARCHAR(40)					,
-playlist_name		VARCHAR(80)	NOT NULL		,
+playlist_name		VARCHAR(130)	NOT NULL		,
 genre				VARCHAR(40)					,
 subgenre			VARCHAR(40)					,
 CONSTRAINT "PLA_PK_PLAYLIST_ID" PRIMARY KEY(playlist_id)

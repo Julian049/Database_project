@@ -9,7 +9,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +18,7 @@ public class TestFile {
 
     private static final Logger LOGGER = Logger.getLogger(TestFile.class.getName());
     private static final String CSV_INPUT_PATH = "src/resources/spotify_songs.csv";
-    private static final String SQL_OUTPUT_PATH = "src/resources/spotify_songs3.sql";
+    private static final String SQL_OUTPUT_PATH = "src/resources/spotify_songs.sql";
     private static final String MONTH_DAY_SUFFIX = "-01";
     private static final String YEAR_SUFFIX = "-01-01";
     private static final int FULL_DATE_LENGTH = 10;
@@ -150,15 +149,15 @@ public class TestFile {
 
     public String formatReleaseDate(String date) {
         if (date == null || date.trim().isEmpty()) {
-            return "1900-01-01"; // Fecha por defecto
+            return "1900-01-01";
         }
 
         String trimmedDate = date.trim();
 
         return switch (trimmedDate.length()) {
-            case YEAR_LENGTH -> trimmedDate + YEAR_SUFFIX;           // "2020" -> "2020-01-01"
-            case YEAR_MONTH_LENGTH -> trimmedDate + MONTH_DAY_SUFFIX; // "2020-03" -> "2020-03-01"
-            case FULL_DATE_LENGTH -> trimmedDate;                     // "2020-03-15" -> "2020-03-15"
+            case YEAR_LENGTH -> trimmedDate + YEAR_SUFFIX;         
+            case YEAR_MONTH_LENGTH -> trimmedDate + MONTH_DAY_SUFFIX;
+            case FULL_DATE_LENGTH -> trimmedDate;
             default -> {
                 LOGGER.warning("Formato de fecha inesperado: " + date);
                 yield "1900-01-01";
